@@ -8,6 +8,15 @@ const refs = {
    container: document.querySelector('.gallery'),
 };
 
+const defaults = {
+  poster: "https://www.reelviews.net/resources/img/default_poster.jpg",
+  date: "XXXX-XX-XX",
+  title: "Title not found",
+  vote: "XX.XX",
+};
+
+let page = 1;
+
 refs.form.addEventListener('submit', onSubmit);
 
 async function onSubmit(event) {
@@ -21,7 +30,6 @@ async function onSubmit(event) {
       const request = await serverRequest(searchQueries);
       console.log(request.data.hits);
       refs.container.innerHTML = createMarkup(request.data.hits);
-      console.log(createMarkup(request.data.hits));
    }
 
    catch {
@@ -39,9 +47,12 @@ async function serverRequest(searchQueries) {
             image_type: 'photo',
             orientation: 'horizontal',
             safesearch: 'safesearch',
+            per_page: '40',
+            page: page,
          }
       })
    try {
+      console.log(response);
       return response;
 
    } catch (err) {
