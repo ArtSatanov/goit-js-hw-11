@@ -20,22 +20,32 @@ async function onSubmit(event) {
 
    try {
       const request = await serverRequest(searchQueries);
-
-      refs.container.innerHTML = createMarkup(request);
+      console.log(request);
+      // refs.container.innerHTML = createMarkup(request);
    }
 
    catch {
-      Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+      Notify.failure('Sorry, there are no images matching your search query. Please try again.!!!!!!');
    }
 }
 
 
 async function serverRequest(searchQueries) {
-
-   return axios.get('https://pixabay.com/api/', {
+  
+      const  response = await axios.get('https://pixabay.com/api/', {
       params: {
-         
-      }
-   })
+         q: searchQueries,
+         image_type: photo,
+         orientation: horizontal,
+         safesearch: true
+         }
+      })
+   try {
+      console.log(response);
+      return response;
+
+   } catch (err) {
+      Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+   }
    
 }
