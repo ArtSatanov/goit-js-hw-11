@@ -13,6 +13,8 @@ const refs = {
 refs.form.addEventListener('submit', onSubmit);
 refs.loadMore.addEventListener('click', onClick);
 
+refs.input.addEventListener('change', () => localStorage.removeItem('formData-state'));
+
 
 
 async function onSubmit(event) {
@@ -35,12 +37,12 @@ async function onClick(event) {
    const pageIncrement = JSON.parse(localStorage.getItem('formData-state'));
    console.log(pageIncrement);
    try {
-      const request = await loadMoreImgs(pageIncrement.searchQueries);
+      const request = await loadMoreImgs(pageIncrement.searchQueries,pageIncrement.page);
       console.log(request);
       console.log(request.config.params.page);
       refs.container.insertAdjacentHTML('beforeend',createMarkup(request.data.hits)) ;
    }
-   // catch {
-   //    Notify.failure('Sorry, there are no images matching your search query. Please try again.1');
-   // }
+   catch {
+      Notify.failure('Sorry, there are no images matching your search query. Please try again.1');
+   }
 }

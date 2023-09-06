@@ -27,8 +27,8 @@ async function serverRequest(searchQueries) {
    }
 }
 
-async function loadMoreImgs(searchQueries) {
-   currentPage += 1;
+async function loadMoreImgs(searchQueries,page) {
+   currentPage = page + 1;
          const  response = await axios.get('https://pixabay.com/api/', {
          params: {
          key: '39273189-3f8e43104201480407e7841b8',
