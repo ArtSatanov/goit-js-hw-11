@@ -1,5 +1,4 @@
 import axios from "axios";
-axios.defaults.headers.common["x-api-key"] = "39273189-3f8e43104201480407e7841b8";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
@@ -33,11 +32,9 @@ async function onSubmit(event) {
 async function serverRequest(searchQueries) {
   
       const  response = await axios.get('https://pixabay.com/api/', {
-      params: {
-         q: searchQueries,
-         image_type: photo,
-         orientation: horizontal,
-         safesearch: true
+         params: {
+         key: '39273189-3f8e43104201480407e7841b8',
+         q: searchQueries
          }
       })
    try {
