@@ -1,9 +1,9 @@
 import axios from "axios";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-let currentPage = 1;
+let page = 1;
 const formData = {};
-async function serverRequest(searchQueries) {
+async function serverRequest(searchQueries, currentPage = "1" ) {
   
       const  response = await axios.get('https://pixabay.com/api/', {
          params: {
@@ -28,7 +28,7 @@ async function serverRequest(searchQueries) {
 }
 
 async function loadMoreImgs(searchQueries,page) {
-   currentPage = page + 1;
+         currentPage = Number(page) + 1;
          const  response = await axios.get('https://pixabay.com/api/', {
          params: {
          key: '39273189-3f8e43104201480407e7841b8',
@@ -41,7 +41,7 @@ async function loadMoreImgs(searchQueries,page) {
          }
          })
    try {
-            formData.searchQueries = searchQueries;
+      formData.searchQueries = searchQueries;
       formData.page = currentPage;
       localStorage.setItem("formData-state", JSON.stringify(formData));
       return response;

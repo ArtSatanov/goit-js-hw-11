@@ -9,13 +9,11 @@ const refs = {
    container: document.querySelector('.gallery'),
    loadMore: document.querySelector('.load-more'),
 };
-console.log(refs)
 
 refs.form.addEventListener('submit', onSubmit);
 refs.loadMore.addEventListener('click', onClick);
 refs.input.addEventListener('change', () => {
    localStorage.removeItem('formData-state');
-   formData = {};
 }
 );
 
@@ -26,31 +24,39 @@ async function onSubmit(event) {
 
    const formData = new FormData(event.currentTarget);
    const searchQueries = formData.get("searchQuery").split(" ").map((item) => item.trim()).filter((item) => item).join("+");
+   console.log(searchQueries);
    try {
+
+      if (!searchQueries) {
+         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+      } else {
       const request = await serverRequest(searchQueries);
-      console.log(request.data.hits);
-      console.log(request);
       refs.container.innerHTML = createMarkup(request.data.hits);
 
       if (request.config.params.page < request.data.totalHits/40) {
       refs.loadMore.classList.remove("load-more-hidden");
-    }
+         }
+         }
    }
    catch {
-      Notify.failure('Sorry, there are no images matching your search query. Please try again.1');
+      Notify.failure('Sorry, there are no images matching your search query. Please try again.');
    }
 }
 
 async function onClick(event) {
    const pageIncrement = JSON.parse(localStorage.getItem('formData-state'));
-   console.log(pageIncrement);
    try {
-      const request = await loadMoreImgs(pageIncrement.searchQueries,pageIncrement.page);
-      console.log(request);
-      console.log(request.config.params.page);
-      refs.container.insertAdjacentHTML('beforeend',createMarkup(request.data.hits)) ;
+      const request = await loadMoreImgs(pageIncrement.searchQueries, pageIncrement.page);
+      if (request.config.params.page > request.data.totalHits / 40) {
+         Notify.failure(`We're sorry, but you've reached the end of search results.`);
+         refs.loadMore.classList.add("load-more-hidden");
+
+      } else {
+         
+         refs.container.insertAdjacentHTML('beforeend', createMarkup(request.data.hits));
+      }
    }
    catch {
-      Notify.failure('Sorry, there are no images matching your search query. Please try again.1');
+      Notify.failure('Sorry, there are no images matching your search query. Please try again.111');
    }
 }
