@@ -4,7 +4,7 @@
    align-items: center;
 }
 
-.load-more-hidden {
+.load-more .load-more-hidden {
    display: none;
 }
 
@@ -21,6 +21,10 @@
    color: #fff;
    cursor: pointer;
    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.load-more-hidden {
+   display: none;
 }
 
 .load-more:hover {
