@@ -15,8 +15,9 @@ refs.form.addEventListener('submit', onSubmit);
 refs.loadMore.addEventListener('click', onClick);
 refs.input.addEventListener('change', () => {
    localStorage.removeItem('formData-state');
-   currentPage = 1
-});
+   formData = {};
+}
+);
 
 
 
@@ -41,7 +42,7 @@ async function onSubmit(event) {
 }
 
 async function onClick(event) {
-   const pageIncrement = JSON.parse(localStorage.getItem('formData-state')) ?? {};
+   const pageIncrement = JSON.parse(localStorage.getItem('formData-state'));
    console.log(pageIncrement);
    try {
       const request = await loadMoreImgs(pageIncrement.searchQueries,pageIncrement.page);
