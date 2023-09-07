@@ -48,11 +48,11 @@ async function onClick(event) {
    try {
       const request = await loadMoreImgs(pageIncrement.searchQueries, pageIncrement.page);
       if (request.config.params.page > request.data.totalHits / 40) {
-         Notify.failure(`We're sorry, but you've reached the end of search results.`);
+         Notify.info(`We're sorry, but you've reached the end of search results.`);
          refs.loadMore.classList.add("load-more-hidden");
 
       } else {
-          Notify.failure(`Hooray! We found ${request.data.totalHits} images.`);
+          Notify.success(`Hooray! We found ${request.data.totalHits} images.`);
          refs.container.insertAdjacentHTML('beforeend', createMarkup(request.data.hits));
       }
    }
