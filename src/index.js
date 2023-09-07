@@ -52,7 +52,7 @@ async function onClick(event) {
          refs.loadMore.classList.add("load-more-hidden");
 
       } else {
-         
+          Notify.failure(`Hooray! We found ${request.data.totalHits} images.`);
          refs.container.insertAdjacentHTML('beforeend', createMarkup(request.data.hits));
       }
    }
