@@ -74,12 +74,17 @@ async function onClick(event) {
     if (request.config.params.page > request.data.totalHits / 40) {
       Notify.info(`We're sorry, but you've reached the end of search results.`);
       refs.loadMore.classList.add('load-more-hidden');
+      refs.container.insertAdjacentHTML(
+        'beforeend',
+        createMarkup(request.data.hits)
+      );
     } else {
       Notify.success(`Hooray! We found ${request.data.totalHits} images.`);
       refs.container.insertAdjacentHTML(
         'beforeend',
         createMarkup(request.data.hits)
-       );
+      );
+      
        let lightbox = new SimpleLightbox('.gallery a', {
         captionsData: 'alt',
           captionDelay: 250,
