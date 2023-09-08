@@ -49,8 +49,10 @@ async function onSubmit(event) {
         captionsData: 'alt',
         captionDelay: 250,
       });
+      console.log("request.config.params.page"+ typeof(request.config.params.page));
+      console.log("request.data.totalHits"+ request.data.totalHits);
 
-      if (request.config.params.page < request.data.totalHits / 40) {
+      if (40 < Number(request.data.totalHits)) {
         refs.loadMore.classList.remove('load-more-hidden');
       }
        
