@@ -41,7 +41,8 @@ async function onSubmit(event) {
           Notify.failure(
              'Sorry, there are no images matching your search query. Please try again.'
           );
-       }
+      }
+      Notify.success(`Hooray! We found ${request.data.totalHits} images.`);
       refs.container.innerHTML = createMarkup(request.data.hits);
 
       let lightbox = new SimpleLightbox('.gallery a', {
@@ -85,7 +86,7 @@ async function onClick(event) {
     }
   } catch {
     Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.111'
+      'Sorry, there are no images matching your search query. Please try again.'
     );
   }
 }
